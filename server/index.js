@@ -17,7 +17,7 @@ app.use(bp.urlencoded({
   extended: true
 }))
 
-var auth = require('./authentication/auth')
+var auth = require('./authentication/routes')
 //auth = require('./authentication/auth')
 app.use(auth.session)
 app.use(auth.router)
