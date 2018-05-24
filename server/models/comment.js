@@ -4,13 +4,12 @@ let ObjectId = Schema.Types.ObjectId
 
 
 let schema = new Schema({
-    title: { type: String, required: true },
     body: { type: String, required: true },
     author: { type: ObjectId, ref: 'User'},
-    ship: {type: ObjectId, ref: 'Ship'},
+    log: {type: ObjectId, ref: 'Log'},
     starDate: {type: Number, default: Date.now(), required: true}
 }
 )
 
 
-module.exports = mongoose.model('log', schema)
+module.exports = mongoose.model('Comment', schema)

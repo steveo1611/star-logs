@@ -1,10 +1,11 @@
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
+var schemaName = 'User'
 let ObjectId = Schema.Types.ObjectId
 let bcrypt = require('bcryptjs')
 const SALT = 10
 
-const RANK = [
+const RANKS = [
   'Ensign',
   'Lieutenant',
   'Captain',
@@ -15,14 +16,15 @@ let schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true, dropDups: true },
   hash: { type: String, required: true },
-  rank: {
+  created: { type: Number, required: true, default: Date.now(),
+    rank: {
     type: String,
     required: true,
-    enum: RANK,
+    enum: RANKS,
     default: 'Ensign'
   },
   shipId: { type: ObjectId, ref: 'Ship' },
-  created: { type: Number, required: true, default: Date.now() }
+ }
 })
 
 
@@ -62,4 +64,4 @@ schema.methods.validatePassword = function (password) {
 //   })
 // };
 
-module.exports = mongoose.model('User', schema)
+module.exports = mongoose.model(schemaName, schema)
