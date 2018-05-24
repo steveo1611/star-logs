@@ -19,9 +19,9 @@ store.on('error', function (error) {
 var session = expressSession({
 	secret: 'It\'s dangerous to go alone',
 	cookie: {
-		maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week 
+		maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week 
 	},
-	store: store,
+	store,
 	resave: true,
 	saveUninitialized: true
 });

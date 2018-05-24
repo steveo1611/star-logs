@@ -6,7 +6,9 @@ var port = 3000
 
 app.use(cors())
 //Fire up database connection
-require("./db/mlab-config")
+require('./db/mlab-config')
+
+//var auth = require('./authentication/auth')
 
 
 //REGISTER MIDDLEWEAR
@@ -15,6 +17,35 @@ app.use(bp.urlencoded({
   extended: true
 }))
 
-let auth = require('./authentication/auth/routes')
+var auth = require('./authentication/auth')
+//auth = require('./authentication/auth')
 app.use(auth.session)
 app.use(auth.router)
+
+// app.use(auth.router)
+
+
+app.use('/members/*', (req, res, next) => {
+  if (!req.session.uid) {
+    return res.status(401).send({
+      error: 'please login to continue'
+    })
+  }
+  next()
+})
+
+app.use('/admin/*', (req, res, next) => {
+})
+
+//app.use('/members/', galaxies.router)
+app.get('*', (req, res, next) => {
+  res.status(404).send({
+    error: 'No matching routes'
+  })
+})
+
+app.listen(3000)
+
+// app.listen(port, () => {
+//   console.log('server running on port', port)
+//  })
